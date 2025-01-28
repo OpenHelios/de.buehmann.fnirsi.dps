@@ -1,0 +1,44 @@
+plugins {
+	id 'java'
+	id 'application'
+	id 'net.ltgt.errorprone' version '4.1.0'
+	id 'eclipse'
+}
+version = '0.0.1'
+group = 'de.buehmann'
+java.toolchain {
+	languageVersion = JavaLanguageVersion.of(21)
+}
+repositories {
+	mavenCentral()
+}
+dependencies {
+	errorprone 'com.google.errorprone:error_prone_core:2.36.0'
+	errorprone 'com.uber.nullaway:nullaway:0.12.3'
+	compileOnly 'org.jspecify:jspecify:1.0.0'
+	implementation 'ch.qos.logback:logback-classic:1.5.16'
+	implementation 'com.fazecast:jSerialComm:2.11.0'
+}
+import net.ltgt.gradle.errorprone.CheckSeverity
+tasks.withType(JavaCompile) {
+	def excludeTests = false
+	if (!excludeTests || !name.toLowerCase().contains("test")) {
+		options.errorprone {
+			check("NullAway", CheckSeverity.WARN)
+			option("NullAway:AnnotatedPackages", "de.buehmann")
+		}
+	}
+}
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+	testLogging {
+		exceptionFormat = 'full'
+	}
+}
+application {
+	mainModule = 'de.buehmann.fnirsi.dps'
+	mainClass = 'de.buehmann.fnirsi.dps.Main'
+}
