@@ -3,6 +3,9 @@ package de.buehmann.fnirsi.dps.protocol.response;
 import java.util.Arrays;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.buehmann.fnirsi.dps.DPS150Listener;
 import de.buehmann.fnirsi.dps.protocol.Checksum;
 import de.buehmann.fnirsi.dps.protocol.CommandId;
@@ -13,6 +16,8 @@ import de.buehmann.fnirsi.dps.protocol.RequestId;
 
 @SuppressWarnings("ArrayRecordComponent")
 public class Messages {
+
+  private static final Logger LOG = LoggerFactory.getLogger(Messages.class);
 
   private final byte[] bytes;
   private final Set<DPS150Listener> listeners;
@@ -32,37 +37,36 @@ public class Messages {
     }
     final byte headerId = bytes[startMessageIndex];
     if (HeaderId.INPUT.get() != headerId) {
-      System.err.println(
-          "expected header input ID " + Data.toHex(HeaderId.INPUT.get()) + ", but was " + Data.toHex(headerId));
+      LOG.error("expected header input ID {}, but was {}", Data.hex(HeaderId.INPUT.get()), Data.hex(headerId));
       return false;
     }
     final int sizeIndex = startMessageIndex + Index.DATA_SIZE.get();
     if (sizeIndex >= bytes.length) {
-      System.err.println("expected lengthIndex=" + sizeIndex + " < bytes.length=" + bytes.length);
+      LOG.error("expected lengthIndex={} < bytes.length={}", sizeIndex, bytes.length);
       return false;
     }
     final int dataSize = Data.uint8(bytes[sizeIndex]);
     final int messageSize = Index.DATA.get() + dataSize + Checksum.SIZE;
     nextMessageIndex = startMessageIndex + messageSize;
     if (nextMessageIndex > bytes.length) {
-      System.err.println(
-          "expected next message starts at " + nextMessageIndex + ", but was not inside bytes.length=" + bytes.length);
+      LOG.error("expected next message starts at {}, but was not inside bytes.length={}", nextMessageIndex,
+          bytes.length);
       return false;
     }
     final byte[] message = Arrays.copyOfRange(bytes, startMessageIndex, nextMessageIndex);
     final String error = Checksum.check(message);
     if (null != error) {
-      System.err.println(error);
+      LOG.error(error);
       return false;
     }
     final byte commandId = message[Index.COMMAND.get()];
     if (commandId != CommandId.GET.get()) {
-      System.err.println("unexpected response command ID " + Data.toHex(commandId));
+      System.err.println("unexpected response command ID " + Data.hex(commandId));
       return false;
     }
     final RequestId requestId = RequestId.findById(message[Index.TYPE.get()]);
     if (null == requestId) {
-      System.err.println("unknown requestId=" + Data.toHex(message[Index.TYPE.get()]));
+      LOG.error("unknown requestId={}", Data.hex(message[Index.TYPE.get()]));
       response = new GenericMessage(message);
     } else {
       response = switch (requestId) {
