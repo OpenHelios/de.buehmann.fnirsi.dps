@@ -27,8 +27,8 @@ public class Checksum {
   public static String check(final byte[] bytes) {
     final byte checksum = generate(bytes);
     if (bytes[bytes.length - 1] != checksum) {
-      return "expected checksum " + Data.toHex(checksum) + ", but was " + Data.toHex(bytes[bytes.length - 1]) + " in "
-          + Data.toHex(bytes);
+      return "expected checksum " + Data.hex(checksum) + ", but was " + Data.hex(bytes[bytes.length - 1]) + " in "
+          + Data.hex(bytes);
     }
     return null;
   }

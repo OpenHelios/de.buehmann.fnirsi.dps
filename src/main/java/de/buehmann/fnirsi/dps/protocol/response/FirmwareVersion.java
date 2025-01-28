@@ -7,6 +7,6 @@ import de.buehmann.fnirsi.dps.protocol.Index;
 public record FirmwareVersion(String version) implements VersionResponse {
 
   FirmwareVersion(final byte[] message) {
-    this(Data.toText(message, Index.DATA.get(), message.length - Index.DATA.get() - Checksum.SIZE));
+    this(Data.text(message, Index.DATA.get(), message.length - Index.DATA.get() - Checksum.SIZE));
   }
 }

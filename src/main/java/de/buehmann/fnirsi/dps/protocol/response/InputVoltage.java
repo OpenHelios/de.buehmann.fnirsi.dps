@@ -5,7 +5,7 @@ import de.buehmann.fnirsi.dps.protocol.Index;
 
 public record InputVoltage(float voltageInV) implements VoltageResponse {
   public InputVoltage(final byte[] message) {
-    this(Data.toFloat(message, Index.DATA.get()));
+    this(Data.float32(message, Index.DATA.get()));
   }
 
   public boolean isSameDisplay(final InputVoltage v) {

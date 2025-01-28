@@ -7,9 +7,9 @@ public record OutputVoltageCurrentPower(float voltageInV, float currentInA, floa
     implements VoltageResponse, CurrentResponse, PowerResponse {
   public OutputVoltageCurrentPower(final byte[] message) {
     this( //
-        Data.toFloat(message, Index.DATA.get()), //
-        Data.toFloat(message, Index.DATA.get() + 4), //
-        Data.toFloat(message, Index.DATA.get() + 8));
+        Data.float32(message, Index.DATA.get()), //
+        Data.float32(message, Index.DATA.get() + 4), //
+        Data.float32(message, Index.DATA.get() + 8));
 
   }
 

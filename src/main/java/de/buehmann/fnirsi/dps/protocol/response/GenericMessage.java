@@ -6,7 +6,7 @@ public record GenericMessage(byte[] message) implements Response {
 
   @Override
   public final String toString() {
-    return Data.toHex(message);
+    return Data.hex(message);
   }
 
 }

@@ -6,11 +6,11 @@ public class Data {
     // hide constructor for this utility class
   }
 
-  public static String toHex(final byte data) {
+  public static String hex(final byte data) {
     return String.format("%02X ", data & 0xFF);
   }
 
-  public static String toHex(final byte[] data) {
+  public static String hex(final byte[] data) {
     final StringBuilder sb = new StringBuilder(data.length * 2);
     for (final byte b : data) {
       sb.append(String.format("%02X ", b & 0xFF));
@@ -18,7 +18,7 @@ public class Data {
     return sb.toString();
   }
 
-  public static String toText(final byte[] data, final int index, final int size) {
+  public static String text(final byte[] data, final int index, final int size) {
     final StringBuilder sb = new StringBuilder(size);
     for (int i = index; i < index + size; i++) {
       final char c = (char) (data[i] & 0xFF);
@@ -27,7 +27,7 @@ public class Data {
     return sb.toString();
   }
 
-  public static float toFloat(final byte[] data, final int index) {
+  public static float float32(final byte[] data, final int index) {
     return Float.intBitsToFloat( //
         (data[index + 3] & 0xFF) << 24 //
             | (data[index + 2] & 0xFF) << 16 //
