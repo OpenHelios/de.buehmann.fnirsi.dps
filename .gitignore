@@ -5,3 +5,5 @@ bin/
 downloads/
 .project
 .classpath
+gradle.properties
+/target/

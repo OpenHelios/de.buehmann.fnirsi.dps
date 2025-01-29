@@ -3,9 +3,16 @@ plugins {
 	id 'application'
 	id 'net.ltgt.errorprone' version '4.1.0'
 	id 'eclipse'
+	id 'maven-publish' // Maven Central Upload
+	id 'signing' // Maven Central Upload
 }
 version = '0.0.1'
 group = 'io.github.openhelios'
+java {
+	withJavadocJar() // Maven Central Upload
+	withSourcesJar() // Maven Central Upload
+}
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT") // Maven Central Upload
 java.toolchain {
 	languageVersion = JavaLanguageVersion.of(21)
 }
@@ -41,4 +48,59 @@ test {
 application {
 	mainModule = 'io.github.openhelios.fnirsi.dps'
 	mainClass = 'io.github.openhelios.fnirsi.dps.Main'
+}
+
+// Maven Central Upload
+publishing {
+	repositories {
+		maven {
+			def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+			def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+			name = "OSSRH"
+			url = isReleaseVersion ? releaseRepo : snapshotRepo
+			credentials {
+				username = findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME")
+				password = findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD")
+			}
+		}
+	}
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			pom {
+				groupId = 'io.github.openhelios'
+				name = 'fnirsi.dps'
+				description = 'Unofficial Java library to commnunicate with FNIRSi DPS-150.'
+				url = 'https://github.com/openhelios/io.github.openhelios.fnirsi.dps'
+				
+				licenses {
+					license {
+						name = 'LGPLv2.1'
+						url = 'https://raw.githubusercontent.com/OpenHelios/io.github.openhelios.fnirsi.dps/refs/heads/main/LICENSE'
+					}
+				}
+				scm {
+					url = 'https://github.com/openhelios/io.github.openhelios.fnirsi.dps'
+					connection = 'scm:git://github.com:openhelios/io.github.openhelios.fnirsi.dps.git'
+					developerConnection = 'scm:git://github.com:openhelios/io.github.openhelios.fnirsi.dps.git'
+				}
+				developers {
+					developer {
+						id = 'openhelios'
+						name = 'Raimar Bühmann'
+						email = 'openhelios@users.noreply.github.com'
+						organizationUrl = 'https://github.com/openhelios/'
+					}
+				}
+			}
+		}
+	}
+}
+
+signing {
+	sign publishing.publications.mavenJava
+}
+
+tasks.withType(Sign) {
+	onlyIf { isReleaseVersion }
 }
