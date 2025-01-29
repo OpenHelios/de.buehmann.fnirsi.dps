@@ -52,6 +52,26 @@ application.
 
 See usage example in [Main.java](src/main/java/io/github/openhelios/fnirsi/dps/Main.java).
 
+### Add Maven Dependency
+
+Add the following Maven dependency to your pom.xml file:
+
+```
+<dependency>
+	<groupId>io.github.openhelios</groupId>
+	<artifactId>fnirsi.dps</artifactId>
+	<version>0.0.1</version>
+</dependency>
+```
+
+### Add Gradle Dependency
+
+Add the following Gradle dependency to your build.gradle file:
+
+```
+implementation 'io.github.openhelios:fnirsi.dps:0.0.1'
+```
+
 ## Links
 
 * Official manual: https://www.fnirsi.com/pages/support-and-downloads
