@@ -1,5 +1,5 @@
 @org.jspecify.annotations.NullMarked //
-module de.buehmann.fnirsi.dps {
+module io.github.openhelios.fnirsi.dps {
   // Java
   requires java.base;
   requires java.desktop;
@@ -10,8 +10,8 @@ module de.buehmann.fnirsi.dps {
   // jCommSerial
   requires transitive com.fazecast.jSerialComm;
 
-  exports de.buehmann.fnirsi.dps;
-  exports de.buehmann.fnirsi.dps.protocol;
-  exports de.buehmann.fnirsi.dps.protocol.response;
+  exports io.github.openhelios.fnirsi.dps;
+  exports io.github.openhelios.fnirsi.dps.protocol;
+  exports io.github.openhelios.fnirsi.dps.protocol.response;
 
 }
