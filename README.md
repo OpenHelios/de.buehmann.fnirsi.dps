@@ -1,4 +1,4 @@
-# de.buehmann.fnirsi.dps
+# io.github.openhelios.fnirsi.dps
 
 Unofficial Java library to communicate with FNIRSi DPS-150.
 
@@ -32,16 +32,16 @@ Execute
 
 ```
 cd build/distributions
-unzip de.buehmann.fnirsi.dps-0.0.1.zip
-./de.buehmann.fnirsi.dps-0.0.1/bin/de.buehmann.fnirsi.dps
+unzip io.github.openhelios.fnirsi.dps-0.0.1.zip
+./io.github.openhelios.fnirsi.dps-0.0.1/bin/io.github.openhelios.fnirsi.dps
 ```
 
 ### Windows
 
-* Extract ZIP file `de.buehmann.fnirsi.dps-0.0.1.zip` from
+* Extract ZIP file `io.github.openhelios.fnirsi.dps-0.0.1.zip` from
   sub folder `build/distributions`.
 * Start extracted file
-  `de.buehmann.fnirsi.dps-0.0.1/bin/de.buehmann.fnirsi.dps.bat`
+  `io.github.openhelios.fnirsi.dps-0.0.1/bin/io.github.openhelios.fnirsi.dps.bat`
 
 ## Usage of Example
 
@@ -50,7 +50,7 @@ application.
 
 ## Usage of Library
 
-See usage example in [Main.java](src/main/java/de/buehmann/fnirsi/dps/Main.java).
+See usage example in [Main.java](src/main/java/io/github/openhelios/fnirsi/dps/Main.java).
 
 ## Links
 

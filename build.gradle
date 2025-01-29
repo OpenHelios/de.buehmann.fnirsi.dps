@@ -5,7 +5,7 @@ plugins {
 	id 'eclipse'
 }
 version = '0.0.1'
-group = 'de.buehmann'
+group = 'io.github.openhelios'
 java.toolchain {
 	languageVersion = JavaLanguageVersion.of(21)
 }
@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
 	if (!excludeTests || !name.toLowerCase().contains("test")) {
 		options.errorprone {
 			check("NullAway", CheckSeverity.WARN)
-			option("NullAway:AnnotatedPackages", "de.buehmann")
+			option("NullAway:AnnotatedPackages", "io.github.openhelios")
 		}
 	}
 }
@@ -39,6 +39,6 @@ test {
 	}
 }
 application {
-	mainModule = 'de.buehmann.fnirsi.dps'
-	mainClass = 'de.buehmann.fnirsi.dps.Main'
+	mainModule = 'io.github.openhelios.fnirsi.dps'
+	mainClass = 'io.github.openhelios.fnirsi.dps.Main'
 }
