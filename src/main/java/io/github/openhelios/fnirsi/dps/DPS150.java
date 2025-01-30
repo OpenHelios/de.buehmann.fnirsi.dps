@@ -17,6 +17,9 @@ import io.github.openhelios.fnirsi.dps.protocol.ConstCommand;
 import io.github.openhelios.fnirsi.dps.protocol.SetCommand;
 import io.github.openhelios.fnirsi.dps.protocol.response.Messages;
 
+/**
+ * Represents the DPS-150 to send commands to and receive responses.
+ */
 public class DPS150 implements SerialPortDataListener {
 
   private static final String DESCRIPTIVE_PORT_NAME = "AT32 Virtual Com Port";
@@ -39,6 +42,11 @@ public class DPS150 implements SerialPortDataListener {
     throw new IllegalStateException(DESCRIPTIVE_PORT_NAME + " not found in: " + names);
   }
 
+  /**
+   * Opens a serial connection with a DPS-150.
+   *
+   * @param serialPort The serial port to be used to open the connection with DPS-150.
+   */
   public DPS150(final SerialPort serialPort) {
     this.serialPort = serialPort;
     serialPort.setBaudRate(115200);
@@ -53,10 +61,18 @@ public class DPS150 implements SerialPortDataListener {
     SerialPort.addShutdownHook(new Thread(this::onShutdown));
   }
 
+  /**
+   * Default constructor searches automatically for DPS-150.
+   */
   public DPS150() {
     this(getSerialPortByDescrptvePortName(SerialPort.getCommPorts()));
   }
 
+  /**
+   * Adds a listener, which wants to be informed by each received response from DPS-150.
+   *
+   * @param listener The DPS-150 listener.
+   */
   public void addListener(final DPS150Listener listener) {
     this.listeners.add(listener);
     if (1 == listeners.size()) {
@@ -64,12 +80,20 @@ public class DPS150 implements SerialPortDataListener {
     }
   }
 
+  /**
+   * Removes the given previously added listener.
+   *
+   * @param listener The listener.
+   */
   public void removeListener(final DPS150Listener listener) {
     if (listeners.remove(listener) && listeners.isEmpty()) {
       serialPort.removeDataListener();
     }
   }
 
+  /**
+   * Removes all previously added listeners.
+   */
   public void removeAllListeners() {
     for (final var listener : new ArrayList<>(listeners)) {
       removeListener(listener);
@@ -87,10 +111,16 @@ public class DPS150 implements SerialPortDataListener {
     writeBytes(command.get());
   }
 
+  /**
+   * Sends a connection message to DPS-150. The device shows the key icon while connected.
+   */
   public void connect() {
     writeBytes(ConstCommand.CONNECT);
   }
 
+  /**
+   * Sends a disconnect message to DPS-150. The key icon disappears after disconnection.
+   */
   public void disconnect() {
     if (serialPort.isOpen()) {
       serialPort.flushDataListener();
@@ -99,50 +129,95 @@ public class DPS150 implements SerialPortDataListener {
     }
   }
 
+  /**
+   * Sends the baud rate, which is normally 115200 bits per second.
+   */
   public void baudRate() {
     writeBytes(ConstCommand.BAUD_RATE_115200);
   }
 
+  /**
+   * Sends a request command to get the model name, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.ModelName} response.
+   */
   public void requestModelName() {
     writeBytes(ConstCommand.REQUEST_MODEL_NAME);
   }
 
+  /**
+   * Sends a request command to get the hardware version, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.HardwareVersion} response.
+   */
   public void requestHardwareVersion() {
     writeBytes(ConstCommand.REQUEST_HARDWARE_VERSION);
   }
 
+  /**
+   * Sends a request command to get the firmware version, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.FirmwareVersion} response.
+   */
   public void requestFirmwareVersion() {
     writeBytes(ConstCommand.REQUEST_FIRMWARE_VERSION);
   }
 
+  /**
+   * Sends a request command to get all values, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.All} response.
+   */
   public void requestAll() {
     writeBytes(ConstCommand.REQUEST_ALL);
   }
 
+  /**
+   * Sends a command to set the output voltage in V.
+   *
+   * @param voltageInV The voltage in V.
+   */
   public void setOutputVoltageInV(final float voltageInV) {
     writeBytes(SetCommand.outputVoltage(voltageInV));
   }
 
+  /**
+   * Sends a command to set the output current in A.
+   *
+   * @param currentInA The current in A.
+   */
   public void setOutputCurrentInA(final float currentInA) {
     writeBytes(SetCommand.outputCurrent(currentInA));
   }
 
+  /**
+   * Sends a command to enable or disable the metering.
+   *
+   * @param isEnabled True to enable the metering.
+   */
   public void setMeteringOn(final boolean isEnabled) {
     writeBytes(SetCommand.meteringOn(isEnabled));
   }
 
-  public void setMeteringState(final byte state) {
-    writeBytes(SetCommand.meteringState(state));
-  }
-
+  /**
+   * Sends a command to enable or disable the output.
+   *
+   * @param isEnabled True to enable the output.
+   */
   public void setOutputOn(final boolean isEnabled) {
     writeBytes(SetCommand.outputOn(isEnabled));
   }
 
+  /**
+   * Sends a command to set the brightness state of the LCD display.
+   *
+   * @param state The brightness state between 0 and 15.
+   */
   public void setBrightness(final int state) {
     writeBytes(SetCommand.brightness(state));
   }
 
+  /**
+   * Sends a command to set the volume state for the beep sound.
+   *
+   * @param state The volume state between 0 and 15.
+   */
   public void setVolume(final int state) {
     writeBytes(SetCommand.volume(state));
   }
@@ -171,6 +246,11 @@ public class DPS150 implements SerialPortDataListener {
     }
   }
 
+  /**
+   * The connected state.
+   *
+   * @return True, if the serial port is currently connected.
+   */
   public boolean isConnected() {
     return serialPort.isOpen();
   }

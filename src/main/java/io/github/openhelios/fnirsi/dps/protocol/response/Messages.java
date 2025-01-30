@@ -14,6 +14,9 @@ import io.github.openhelios.fnirsi.dps.protocol.HeaderId;
 import io.github.openhelios.fnirsi.dps.protocol.Index;
 import io.github.openhelios.fnirsi.dps.protocol.RequestId;
 
+/**
+ * Class to parse the bytes from the DPS-150 to create typed response classes and notifies all listeners.
+ */
 @SuppressWarnings("ArrayRecordComponent")
 public class Messages {
 
@@ -26,6 +29,12 @@ public class Messages {
   private int nextMessageIndex;
   private Response response;
 
+  /**
+   * Constructor.
+   *
+   * @param bytes The received bytes.
+   * @param listeners The listeners.
+   */
   public Messages(final byte[] bytes, final Set<DPS150Listener> listeners) {
     this.bytes = bytes;
     this.listeners = listeners;
@@ -94,6 +103,9 @@ public class Messages {
     return response;
   }
 
+  /**
+   * Read all bytes, creates the typed response classes and notifies the listeners.
+   */
   public void readAll() {
     while (hasMore()) {
       final Response response = next();

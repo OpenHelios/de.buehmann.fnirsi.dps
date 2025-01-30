@@ -15,20 +15,30 @@ import io.github.openhelios.fnirsi.dps.protocol.response.ProtectionStateChanged;
 import io.github.openhelios.fnirsi.dps.protocol.response.Response;
 import io.github.openhelios.fnirsi.dps.protocol.response.Temperature;
 
+/**
+ * A console printer of the values received from DPS-150.
+ */
 public class ConsolePrinter implements DPS150Listener {
 
-  private float temperatureInC = 0;
+  private final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS");
+
+  private float temperatureInC;
   private InputVoltage inputVoltage = new InputVoltage(0);
   private OutputVoltageCurrentPower outputVoltageCurrentPower = new OutputVoltageCurrentPower(0, 0, 0);
   private OutputEnergy outputEnergy = new OutputEnergy(0);
   private OutputMode outputModeId = OutputMode.CV;
 
+  /**
+   * The default constructor.
+   */
+  public ConsolePrinter() {
+    // do nothing
+  }
+
   private boolean print(final Response response) {
     System.out.println(response);
     return false;
   }
-
-  private final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS");
 
   private void print() {
     System.out.println(DTF.format(LocalDateTime.now()) + " " + String.format( //

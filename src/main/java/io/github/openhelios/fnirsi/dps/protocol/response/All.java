@@ -7,6 +7,33 @@ import java.util.List;
 import io.github.openhelios.fnirsi.dps.protocol.Data;
 import io.github.openhelios.fnirsi.dps.protocol.Index;
 
+/**
+ * Response containing all data from DSP-150.
+ *
+ * @param inputVoltageInV The input voltage in V.
+ * @param nominalVoltageInV The nominal output voltage in V.
+ * @param nominalCurrentInA The nominal output current in A.
+ * @param voltageInV The current output voltage in V.
+ * @param currentInA The current output current in A.
+ * @param powerInW The current output power in W.
+ * @param temperatureInC The current device temperature in °C.
+ * @param groups The 6 groups containing nominal output voltage in V and current in A.
+ * @param overVoltageProtectionInV The over voltage protection in V.
+ * @param overCurrentProtectionInA The over current protection in A.
+ * @param overPowerProtectionInWh The over power protection in Wh.
+ * @param overTemperatureProtectionInC The over temperature protection in °C.
+ * @param underVoltageProtectionInV The under voltage protection in V.
+ * @param brightnessState The brightness state.
+ * @param volumeState The volume state
+ * @param isMeteringOn True, if metering is on.
+ * @param capacityInAh The capacity in Ah.
+ * @param energyInWh The energy in Wh.
+ * @param isPowerOn True, if power is on.
+ * @param protectionState The protection state
+ * @param outputMode The output mode.
+ * @param upperLimitVoltageInV The upper limit voltage in V.
+ * @param upperLimitCurrentInV the upper limit current in V.
+ */
 public record All( //
     float inputVoltageInV, //
     float nominalVoltageInV, //
@@ -32,6 +59,11 @@ public record All( //
     float upperLimitVoltageInV, //
     float upperLimitCurrentInV) implements VoltageResponse, CurrentResponse, PowerResponse {
 
+  /**
+   * The constructor.
+   *
+   * @param message The raw message.
+   */
   public All(final byte[] message) {
     this( //
         Data.float32(message, Index.DATA.get() + 0), //
@@ -60,6 +92,13 @@ public record All( //
     );
   }
 
+  /**
+   * Creates the groups.
+   *
+   * @param message The raw message.
+   * @param index The index.
+   * @return The list of created groups.
+   */
   private static List<Group> createGroups(final byte[] message, final int index) {
     final List<Group> groups = new ArrayList<>(6);
     for (int k = 0; k < 6; k++) {

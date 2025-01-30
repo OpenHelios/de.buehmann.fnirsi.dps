@@ -1,5 +1,8 @@
 package io.github.openhelios.fnirsi.dps.protocol;
 
+/**
+ * Enumeration for command IDs.
+ */
 public enum CommandId {
 
   /**
@@ -42,6 +45,11 @@ public enum CommandId {
     this.b = (byte) b;
   }
 
+  /**
+   * The byte for the command ID.
+   *
+   * @return The byte for the command ID.
+   */
   public byte get() {
     return b;
   }

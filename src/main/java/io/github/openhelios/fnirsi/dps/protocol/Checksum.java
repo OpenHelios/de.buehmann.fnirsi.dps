@@ -2,8 +2,12 @@ package io.github.openhelios.fnirsi.dps.protocol;
 
 import org.jspecify.annotations.Nullable;
 
+/**
+ * Utility class to generate and check the checksum.
+ */
 public class Checksum {
 
+  /** The amount of bytes used for the checksum, which is 1. */
   public static final int SIZE = 1;
 
   private static byte generate(final byte[] bytes) {
@@ -15,11 +19,18 @@ public class Checksum {
     return (byte) sum;
   }
 
+  /**
+   * Generates a checksum from the given bytes and writes into the last byte.
+   *
+   * @param bytes The message.
+   */
   public static void write(final byte[] bytes) {
     bytes[bytes.length - 1] = generate(bytes);
   }
 
   /**
+   * Verifies the checksum in the given message.
+   *
    * @param bytes The message.
    * @return Empty string for a valid checksum, otherwise an error message.
    */
@@ -33,4 +44,7 @@ public class Checksum {
     return null;
   }
 
+  private Checksum() {
+    // hide
+  }
 }

@@ -1,19 +1,41 @@
 package io.github.openhelios.fnirsi.dps.protocol;
 
+/**
+ * Enumeration representing constant commands for DPS-150.
+ */
 public enum ConstCommand implements Command {
 
+  /** Command to connect. */
   CONNECT(CommandId.CONNECTION, true),
 
+  /** Command to disconnect. */
   DISCONNECT(CommandId.CONNECTION, false),
 
+  /** Command to set the baud rate 115200. */
   BAUD_RATE_115200(CommandId.BAUD_RATE, (byte) 5),
 
+  /**
+   * Command to request the model name, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.ModelName} response.
+   */
   REQUEST_MODEL_NAME(CommandId.GET, RequestId.MODEL_NAME),
 
+  /**
+   * Command to request the hardware version, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.HardwareVersion} response.
+   */
   REQUEST_HARDWARE_VERSION(CommandId.GET, RequestId.HARDWARE_VERSION),
 
+  /**
+   * Command to request the firmware version, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.FirmwareVersion} response.
+   */
   REQUEST_FIRMWARE_VERSION(CommandId.GET, RequestId.FIRMWARE_VERSION),
 
+  /**
+   * Command to request the all values, which results in a {@link io.github.openhelios.fnirsi.dps.protocol.response.All}
+   * response.
+   */
   REQUEST_ALL(CommandId.GET, RequestId.ALL),
 
   ;

@@ -6,6 +6,11 @@ import io.github.openhelios.fnirsi.dps.protocol.response.All;
 import io.github.openhelios.fnirsi.dps.protocol.response.OutputVoltageCurrentPower;
 import io.github.openhelios.fnirsi.dps.protocol.response.Response;
 
+/**
+ * Example console program for the usage of the DPS150 class.
+ *
+ * Sends commands to and receives responses from the DPS-150
+ */
 public class Main {
 
   private final DPS150 device;
@@ -17,6 +22,12 @@ public class Main {
   private int brightnessState;
   private int volumeState;
 
+  /**
+   * The main method.
+   *
+   * @param args The command line arguments, which are not used.
+   * @throws IOException If there is an IO exception.
+   */
   public static void main(final String[] args) throws IOException {
     final Main main = new Main(new DPS150());
     main.start();

@@ -5,29 +5,33 @@ import java.util.Map;
 
 import org.jspecify.annotations.Nullable;
 
+/**
+ * The protection state.
+ */
 public enum ProtectionState {
 
+  /** Currently no protection needed with index = 0. */
   NONE,
 
-  /** Over Voltage Protection. */
+  /** Over Voltage Protection with index = 1. */
   OVP,
 
-  /** Over Current Protection. */
+  /** Over Current Protection with index = 2. */
   OCP,
 
-  /** Over Power Protection. */
+  /** Over Power Protection with index = 3. */
   OPP,
 
-  /** Over Temperature Protection. */
+  /** Over Temperature Protection with index = 4. */
   OTP,
 
-  /** Lower Voltage Protection. */
+  /** Lower Voltage Protection with index = 5. */
   LVP,
 
-  /** Reverse Input Protection. */
+  /** Reverse Input Protection with index = 6. */
   RIP,
 
-  /** Reverse Output Protection. */
+  /** Reverse Output Protection with index = 7. */
   ROP,
 
   ;
@@ -42,6 +46,12 @@ public enum ProtectionState {
     }
   }
 
+  /**
+   * Gets the protection state by the index.
+   *
+   * @param index The index.
+   * @return The protection state for the given index.
+   */
   @Nullable
   public static ProtectionState byIndex(final byte index) {
     return map.get(index);
