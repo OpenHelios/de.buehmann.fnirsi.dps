@@ -14,6 +14,8 @@ import io.github.openhelios.fnirsi.dps.protocol.response.OutputVoltageCurrentPow
 import io.github.openhelios.fnirsi.dps.protocol.response.ProtectionStateChanged;
 import io.github.openhelios.fnirsi.dps.protocol.response.Response;
 import io.github.openhelios.fnirsi.dps.protocol.response.Temperature;
+import io.github.openhelios.fnirsi.dps.protocol.response.Unknown;
+import io.github.openhelios.fnirsi.dps.protocol.response.UpperLimitTemperature;
 
 /**
  * A console printer of the values received from DPS-150.
@@ -101,6 +103,8 @@ public class ConsolePrinter implements DPS150Listener {
       case final OutputModeChanged m -> update(m);
       case final InputVoltage v -> update(v);
       case final ProtectionStateChanged c -> print(response);
+      case final UpperLimitTemperature u -> print(response);
+      case final Unknown u -> print(response);
       case final All a -> print(response);
       default -> false;
     };

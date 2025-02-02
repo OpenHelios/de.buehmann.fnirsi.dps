@@ -91,6 +91,8 @@ public class Messages {
         case FIRMWARE_VERSION -> new FirmwareVersion(message);
         case PROTECTION_STATE -> new ProtectionStateChanged(message);
         case OUTPUT_MODE -> new OutputModeChanged(message);
+        case UNKNOWN -> new Unknown(message);
+        case UPPER_LIMIT_TEMPERATURE -> new UpperLimitTemperature(message);
         case ALL -> new All(message);
         default -> new GenericMessage(message);
       };

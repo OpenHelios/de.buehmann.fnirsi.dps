@@ -1,5 +1,7 @@
 package io.github.openhelios.fnirsi.dps.protocol;
 
+import io.github.openhelios.fnirsi.dps.protocol.response.Group;
+
 /**
  * Command to set a value, which can be send to the DPS-150.
  */
@@ -94,6 +96,82 @@ public class SetCommand implements Command {
    */
   public static SetCommand volume(final int state) {
     return new SetCommand(RequestId.VOLUME_STATE, (byte) state);
+  }
+
+  /**
+   * Command to set the group voltage.
+   *
+   * @param group The group.
+   * @param index The index between 0 and 5.
+   * @return The created command.
+   */
+  public static SetCommand groupVoltage(final Group group, final int index) {
+    return new SetCommand( //
+        RequestId.findById((byte) ((RequestId.GROUP_0_VOLTAGE.get() & 0xFF) + 2 * index)), //
+        group.voltageInV());
+  }
+
+  /**
+   * Command to set the group current.
+   *
+   * @param group The group.
+   * @param index The index between 0 and 5.
+   * @return The created command.
+   */
+  public static SetCommand groupCurrent(final Group group, final int index) {
+    return new SetCommand( //
+        RequestId.findById((byte) ((RequestId.GROUP_0_CURRENT.get() & 0xFF) + 2 * index)), //
+        group.currentInA());
+  }
+
+  /**
+   * Command to set the over output voltage protection value.
+   *
+   * @param maxVoltageInV The maximum output voltage in V.
+   * @return The created command.
+   */
+  public static SetCommand overVoltageProtectionInV(final float maxVoltageInV) {
+    return new SetCommand(RequestId.OVER_VOLTAGE_PROTECTION, maxVoltageInV);
+  }
+
+  /**
+   * Command to set the over current protection value.
+   *
+   * @param maxCurrentInA The maximum current in A.
+   * @return The created command.
+   */
+  public static SetCommand overCurrentProtectionInA(final float maxCurrentInA) {
+    return new SetCommand(RequestId.OVER_CURRENT_PROTECTION, maxCurrentInA);
+  }
+
+  /**
+   * Command to set the over power protection value.
+   *
+   * @param maxPowerInW The maximum power in W.
+   * @return The created command.
+   */
+  public static SetCommand overPowerProtectionInW(final float maxPowerInW) {
+    return new SetCommand(RequestId.OVER_POWER_PROTECTION, maxPowerInW);
+  }
+
+  /**
+   * Command to set the over temperature protection value.
+   *
+   * @param maxTemperatureInC The maximum temperature in °C.
+   * @return The created command.
+   */
+  public static SetCommand overTemperatureProtectionInC(final float maxTemperatureInC) {
+    return new SetCommand(RequestId.OVER_TEMPERATURE_PROTECTION, maxTemperatureInC);
+  }
+
+  /**
+   * Command to set the under input voltage protection value.
+   *
+   * @param minVoltageInV The minimum input voltage in V.
+   * @return The created command.
+   */
+  public static SetCommand underVoltageProtectionInV(final float minVoltageInV) {
+    return new SetCommand(RequestId.UNDER_VOLTAGE_PROTECTION, minVoltageInV);
   }
 
 }

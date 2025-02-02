@@ -58,6 +58,18 @@ public class Main {
     device.requestModelName();
     device.requestHardwareVersion();
     device.requestFirmwareVersion();
+    //    device.requestUpperLimitTemperature();
+    //    device.setGroup(new Group(12.00f, 0.000f), 0);
+    //    device.setGroup(new Group(12.01f, 0.001f), 1);
+    //    device.setGroup(new Group(12.02f, 0.002f), 2);
+    //    device.setGroup(new Group(12.03f, 0.003f), 3);
+    //    device.setGroup(new Group(12.04f, 0.004f), 4);
+    //    device.setGroup(new Group(12.05f, 0.005f), 5);
+    //    device.setOverVoltageProtectionInV(19);
+    //    device.setOverCurrentProtectionInA(3);
+    //    device.setOverPowerProtectionInW(50f);
+    //    device.setOverTemperatureProtectionInC(77);
+    //    device.setUnderVoltageProtectionInV(1);
     device.requestAll();
     // setOutputVoltageInV(11.00f);
     // setOutputCurrentInA(0.02f);
@@ -66,33 +78,20 @@ public class Main {
     setVolume(15 * 0 / 10);
     boolean isRunning = true;
     while (isRunning) {
-      final int i = System.in.read();
-      if ('+' == i) {
-        setOutputVoltageInV(outputVoltageInV + 0.01f);
-      } else if ('-' == i) {
-        setOutputVoltageInV(outputVoltageInV - 0.01f);
-      } else if ('>' == i) {
-        setOutputCurrentInA(outputCurrentInA + 0.001f);
-      } else if ('<' == i) {
-        setOutputCurrentInA(outputCurrentInA - 0.001f);
-      } else if ('m' == i) {
-        setMeteringOn(!isMeteringOn);
-      } else if ('p' == i) {
-        setPowerOn(!isPowerOn);
-      } else if ('L' == i) {
-        setBrightness(brightnessState + 1);
-      } else if ('l' == i) {
-        setBrightness(brightnessState - 1);
-      } else if ('V' == i) {
-        setVolume(volumeState + 1);
-      } else if ('v' == i) {
-        setVolume(volumeState - 1);
-      } else if ('q' == i) {
-        isRunning = false;
-      } else if ('a' == i) {
-        device.requestAll();
-      } else if ('h' == i) {
-        printHelp();
+      switch (System.in.read()) {
+        case '+' -> setOutputVoltageInV(outputVoltageInV + 0.01f);
+        case '-' -> setOutputVoltageInV(outputVoltageInV - 0.01f);
+        case '>' -> setOutputCurrentInA(outputCurrentInA + 0.001f);
+        case '<' -> setOutputCurrentInA(outputCurrentInA - 0.001f);
+        case 'm' -> setMeteringOn(!isMeteringOn);
+        case 'p' -> setPowerOn(!isPowerOn);
+        case 'L' -> setBrightness(brightnessState + 1);
+        case 'l' -> setBrightness(brightnessState - 1);
+        case 'V' -> setVolume(volumeState + 1);
+        case 'v' -> setVolume(volumeState - 1);
+        case 'a' -> device.requestAll();
+        case 'h' -> printHelp();
+        case 'q' -> isRunning = false;
       }
     }
     device.disconnect();

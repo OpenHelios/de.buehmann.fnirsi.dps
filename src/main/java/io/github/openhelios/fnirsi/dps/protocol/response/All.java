@@ -31,8 +31,14 @@ import io.github.openhelios.fnirsi.dps.protocol.Index;
  * @param isPowerOn True, if power is on.
  * @param protectionState The protection state
  * @param outputMode The output mode.
- * @param upperLimitVoltageInV The upper limit voltage in V.
- * @param upperLimitCurrentInV the upper limit current in V.
+ * @param unknownOn True, if unknown is enabled.
+ * @param upperLimitOutputVoltageInV The upper limit output voltage in V.
+ * @param upperLimitOutputCurrentInA The upper limit output current in A.
+ * @param unknownVoltageInV The unknown voltage in V.
+ * @param unknownCurrentInA The unknown current in A.
+ * @param upperLimitOutputPowerInW The upper limit output power in W.
+ * @param upperLimitTemperatureInC The upper limit temperature in °C.
+ * @param unknownVoltage2InV The unknown voltage 2 in V.
  */
 public record All( //
     float inputVoltageInV, //
@@ -56,8 +62,15 @@ public record All( //
     boolean isPowerOn, //
     ProtectionState protectionState, //
     OutputMode outputMode, //
-    float upperLimitVoltageInV, //
-    float upperLimitCurrentInV) implements VoltageResponse, CurrentResponse, PowerResponse {
+    boolean unknownOn, //
+    float upperLimitOutputVoltageInV, //
+    float upperLimitOutputCurrentInA, //
+    float unknownVoltageInV, //
+    float unknownCurrentInA, //
+    float upperLimitOutputPowerInW, //
+    float upperLimitTemperatureInC, //
+    float unknownVoltage2InV //
+) implements VoltageResponse, CurrentResponse, PowerResponse {
 
   /**
    * The constructor.
@@ -87,8 +100,14 @@ public record All( //
         Data.bool(message, Index.DATA.get() + 107), //
         ProtectionState.byIndex(message[Index.DATA.get() + 108]), //
         OutputMode.by(message[Index.DATA.get() + 109]), //
-        Data.float32(message, Index.DATA.get() + 110), //
-        Data.float32(message, Index.DATA.get() + 114) //
+        Data.bool(message, Index.DATA.get() + 110), // unknown
+        Data.float32(message, Index.DATA.get() + 111), // V
+        Data.float32(message, Index.DATA.get() + 115), // A
+        Data.float32(message, Index.DATA.get() + 119), // V
+        Data.float32(message, Index.DATA.get() + 123), // A
+        Data.float32(message, Index.DATA.get() + 127), // upperLimitOutputPowerInW
+        Data.float32(message, Index.DATA.get() + 131), // upperLimitTemperatureInC
+        Data.float32(message, Index.DATA.get() + 135) // V
     );
   }
 

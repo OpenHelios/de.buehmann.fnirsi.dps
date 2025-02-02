@@ -15,6 +15,7 @@ import com.fazecast.jSerialComm.SerialPortEvent;
 import io.github.openhelios.fnirsi.dps.protocol.Command;
 import io.github.openhelios.fnirsi.dps.protocol.ConstCommand;
 import io.github.openhelios.fnirsi.dps.protocol.SetCommand;
+import io.github.openhelios.fnirsi.dps.protocol.response.Group;
 import io.github.openhelios.fnirsi.dps.protocol.response.Messages;
 
 /**
@@ -161,6 +162,22 @@ public class DPS150 implements SerialPortDataListener {
   }
 
   /**
+   * Sends a request command to get the unknown, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.Unknown} response.
+   */
+  public void requestUnknown() {
+    writeBytes(ConstCommand.REQUEST_UNKNOWN);
+  }
+
+  /**
+   * Sends a request command to get the upper limit temperature, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.UpperLimitTemperature} response.
+   */
+  public void requestUpperLimitTemperature() {
+    writeBytes(ConstCommand.REQUEST_UPPER_LIMIT_TEMPERATURE);
+  }
+
+  /**
    * Sends a request command to get all values, which results in a
    * {@link io.github.openhelios.fnirsi.dps.protocol.response.All} response.
    */
@@ -220,6 +237,62 @@ public class DPS150 implements SerialPortDataListener {
    */
   public void setVolume(final int state) {
     writeBytes(SetCommand.volume(state));
+  }
+
+  /**
+   * Sends two commands to set the voltage and the current of the given group to the given index.
+   *
+   * @param group The group.
+   * @param index The index between 0 and 15.
+   */
+  public void setGroup(final Group group, final int index) {
+    writeBytes(SetCommand.groupVoltage(group, index));
+    writeBytes(SetCommand.groupCurrent(group, index));
+  }
+
+  /**
+   * Sends a command to set the over output voltage protection.
+   *
+   * @param maxVoltageInV The maximum output voltage in V.
+   */
+  public void setOverVoltageProtectionInV(final float maxVoltageInV) {
+    writeBytes(SetCommand.overVoltageProtectionInV(maxVoltageInV));
+  }
+
+  /**
+   * Sends a command to set the over current protection.
+   *
+   * @param maxCurrentInA The maximum current in A.
+   */
+  public void setOverCurrentProtectionInA(final float maxCurrentInA) {
+    writeBytes(SetCommand.overCurrentProtectionInA(maxCurrentInA));
+  }
+
+  /**
+   * Sends a command to set the over power protection.
+   *
+   * @param maxPowerInW The maximum power in W.
+   */
+  public void setOverPowerProtectionInW(final float maxPowerInW) {
+    writeBytes(SetCommand.overPowerProtectionInW(maxPowerInW));
+  }
+
+  /**
+   * Sends a command to set the over temperature protection.
+   *
+   * @param maxTemperatureInC The maximum temperature in °C.
+   */
+  public void setOverTemperatureProtectionInC(final float maxTemperatureInC) {
+    writeBytes(SetCommand.overTemperatureProtectionInC(maxTemperatureInC));
+  }
+
+  /**
+   * Sends a command to set the under input voltage protection.
+   *
+   * @param minVoltageInV The minimum input voltage in V.
+   */
+  public void setUnderVoltageProtectionInV(final float minVoltageInV) {
+    writeBytes(SetCommand.underVoltageProtectionInV(minVoltageInV));
   }
 
   @Override

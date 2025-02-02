@@ -1,5 +1,7 @@
 package io.github.openhelios.fnirsi.dps.protocol;
 
+import java.util.List;
+
 /**
  * Utility class for converting bytes into int, float or hexadecimal String.
  */
@@ -27,6 +29,20 @@ public class Data {
    */
   public static String hex(final byte[] data) {
     final StringBuilder sb = new StringBuilder(data.length * 2);
+    for (final byte b : data) {
+      sb.append(String.format("%02X ", b & 0xFF));
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Converts the given bytes to a hexadecimal String.
+   *
+   * @param data The bytes.
+   * @return The hexadecimal String.
+   */
+  public static String hex(final List<Byte> data) {
+    final StringBuilder sb = new StringBuilder(data.size() * 2);
     for (final byte b : data) {
       sb.append(String.format("%02X ", b & 0xFF));
     }

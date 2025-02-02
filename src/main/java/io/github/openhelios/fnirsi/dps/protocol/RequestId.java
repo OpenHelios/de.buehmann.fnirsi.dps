@@ -25,6 +25,57 @@ public enum RequestId {
   /** Request device temperature. */
   TEMPERATURE(0xC4),
 
+  /** Set and request group 0 voltage in V. */
+  GROUP_0_VOLTAGE(0xC5),
+
+  /** Set and request group 0 current in A. */
+  GROUP_0_CURRENT(0xC6),
+
+  /** Set and request group 1 voltage in V. */
+  GROUP_1_VOLTAGE(0xC7),
+
+  /** Set and request group 1 current in A. */
+  GROUP_1_CURRENT(0xC8),
+
+  /** Set and request group 2 voltage in V. */
+  GROUP_2_VOLTAGE(0xC9),
+
+  /** Set and request group 2 current in A. */
+  GROUP_2_CURRENT(0xCA),
+
+  /** Set and request group 3 voltage in V. */
+  GROUP_3_VOLTAGE(0xCB),
+
+  /** Set and request group 3 current in A. */
+  GROUP_3_CURRENT(0xCC),
+
+  /** Set and request group 4 voltage in V. */
+  GROUP_4_VOLTAGE(0xCD),
+
+  /** Set and request group 4 current in A. */
+  GROUP_4_CURRENT(0xCE),
+
+  /** Set and request group 5 voltage in V. */
+  GROUP_5_VOLTAGE(0xCF),
+
+  /** Set and request group 5 current in A. */
+  GROUP_5_CURRENT(0xD0),
+
+  /** Set and request over voltage protection in V. */
+  OVER_VOLTAGE_PROTECTION(0xD1),
+
+  /** Set and request over current protection in V. */
+  OVER_CURRENT_PROTECTION(0xD2),
+
+  /** Set and request over power protection in W. */
+  OVER_POWER_PROTECTION(0xD3),
+
+  /** Set and request over temperature protection in °C. */
+  OVER_TEMPERATURE_PROTECTION(0xD4),
+
+  /** Set and request under voltage protection in V. */
+  UNDER_VOLTAGE_PROTECTION(0xD5),
+
   /** Set and request brightness state. */
   BRIGHTNESS_STATE(0xD6),
 
@@ -58,11 +109,29 @@ public enum RequestId {
   /** Request firmware version. */
   FIRMWARE_VERSION(0xE0),
 
-  /** Set and request upper limit for voltage. */
+  /** Request unknown (0x01). */
+  UNKNOWN(0xE1),
+
+  /** Request upper limit voltage in V. */
   UPPER_LIMIT_VOLTAGE(0xE2),
 
-  /** Set and request upper limit for current. */
+  /** Request upper limit current in A. */
   UPPER_LIMIT_CURRENT(0xE3),
+
+  /** Request unknown voltage in V. */
+  UNKNOWN_VOLTAGE(0xE4),
+
+  /** Request unknown current in A. */
+  UNKNOWN_CURRENT(0xE5),
+
+  /** Request upper limit power in W. */
+  UPPER_LIMIT_POWER(0xE6),
+
+  /** Request upper limit temperature in °C. */
+  UPPER_LIMIT_TEMPERATURE(0xE7),
+
+  /** Request unknown voltage 2 in V. */
+  UNKNWON_VOLTAGE2(0xE8),
 
   /** Request all values. */
   ALL(0xFF),

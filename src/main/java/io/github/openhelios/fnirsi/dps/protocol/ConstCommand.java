@@ -38,6 +38,18 @@ public enum ConstCommand implements Command {
    */
   REQUEST_ALL(CommandId.GET, RequestId.ALL),
 
+  /**
+   * Command to request the unknown, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.Unknown} response.
+   */
+  REQUEST_UNKNOWN(CommandId.GET, RequestId.UNKNOWN),
+
+  /**
+   * Command to request the upper limit temperature, which results in a
+   * {@link io.github.openhelios.fnirsi.dps.protocol.response.UpperLimitTemperature} response.
+   */
+  REQUEST_UPPER_LIMIT_TEMPERATURE(CommandId.GET, RequestId.UPPER_LIMIT_TEMPERATURE),
+
   ;
 
   private final byte[] bytes;
