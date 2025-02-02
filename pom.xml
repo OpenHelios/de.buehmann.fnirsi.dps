@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.openhelios</groupId>
 	<artifactId>fnirsi.dps</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0</version>
 	<description>Unofficial Java library to communicate with FNIRSi DPS-150.</description>
 	<url>https://github.com/openhelios/io.github.openhelios.fnirsi.dps</url>
 	<licenses>
